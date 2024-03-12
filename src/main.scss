@@ -1,0 +1,263 @@
+$light: #eee;
+$gray1: #888;
+$gray2: #ccc;
+$dark: #25108e;
+$primary: #F675A8;
+$work: #5177e0;
+$personal: $primary;
+$danger: #ea4040;
+$bg: linear-gradient(to right, #F5E8DD, #B5C0D0);
+
+$shadow: 0 1px 3px rgba(0, 0, 0, .2);
+$work-glow: 0 0 5px rgba(81, 119, 224, 0.7);
+$personal-glow: 0 0 5px rgba(246, 117, 168, 0.7);
+
+@mixin box($h: auto, $w: 100%, $br: 0.5rem) {
+  width: $w;
+  height: $h;
+  border-radius: $br;
+  box-shadow: $shadow;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+  background: linear-gradient(to right, #F5E8DD, #B5C0D0);
+  color: $dark;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+h2 {
+  color: $primary;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+h3 {
+  color: $dark;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+h4 {
+  color: $gray1;
+  font-size: 0.8rem;
+  margin: 1.8rem 0 0.8rem 0;
+}
+
+input,
+button {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  cursor: initial;
+}
+
+section {
+  margin: 2rem;
+  padding: 0 2rem;
+}
+
+.greeting {
+  .title {
+    input {
+      margin-left: 1rem;
+      font-size: 1.5rem;
+      color: #5642b8;
+
+      &::placeholder {
+        color: #7f7e7e;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.create-todo {
+  input[type="text"] {
+    @include box ();
+    padding: 1rem 1.5rem;
+    background: #fff;
+    color: $dark;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      flex-direction: column;
+      gap: 0.8rem;
+
+      .bubble {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        border: 2px solid $work;
+        border-radius: 50%;
+        box-shadow: $work-glow;
+
+        &::after {
+          display: block;
+          content: '';
+          width: 0;
+          height: 0;
+          border-radius: 50%;
+          opacity: 0;
+          background: $work;
+          transition: 0.3s;
+        }
+
+        &.personal {
+          border: 2px solid $personal;
+          box-shadow: $personal-glow;
+
+          &::after {
+            background: $personal;
+          }
+
+        }
+      }
+    }
+  }
+
+  input:checked+.bubble::after {
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+  }
+
+  input[type="submit"] {
+    @include box ();
+    background: $primary;
+    padding: 1rem 0;
+    color: #fff;
+    font-size: 1.2rem;
+    box-shadow: $personal-glow;
+    margin-bottom: 1rem;
+
+    &:hover {
+      transform: translate(0.2rem, 0.2rem);
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+
+    }
+  }
+}
+
+.todo-list {
+  .list {
+    .todo-item {
+
+      &.done {
+        .todo-content input {
+          text-decoration: line-through;
+          color: $gray2;
+        }
+
+      }
+
+      @include box;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 1rem;
+
+      label {
+        display: block;
+        margin-right: 1rem;
+
+        input {
+          display: none;
+        }
+      }
+
+      .todo-content {
+        flex-grow: 1;
+      }
+
+      .actions {
+        button {
+          display: block;
+          border: none;
+          border-radius: 0.2rem;
+          padding: 0.4rem;
+          background: $bg;
+          color: $work;
+          cursor: pointer;
+          transition: 0.3s ease-in-out;
+
+          &:hover {
+            color: #fff;
+            background: $primary;
+          }
+        }
+      }
+    }
+  }
+
+  .bubble {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border: 2px solid $work;
+    border-radius: 50%;
+    box-shadow: $work-glow;
+
+    &::after {
+      display: block;
+      content: "";
+      border-radius: 50%;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      background-color: $work;
+      transition: 0.3s;
+    }
+
+    &.personal {
+      border: 2px solid $personal;
+      box-shadow: $personal-glow;
+
+      &::after {
+        background-color: $personal;
+      }
+    }
+  }
+
+  input:checked+.bubble::after {
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+  }
+
+}
